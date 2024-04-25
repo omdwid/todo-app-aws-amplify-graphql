@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import * as mutations from "@/graphql/mutations";
 // 1. Add the queries as an import
 import * as queries from "@/graphql/queries";
-import { FaTrashAlt } from "react-icons/fa";
 
 import config from "@/amplifyconfiguration.json";
 import Header from "@/components/Header";
