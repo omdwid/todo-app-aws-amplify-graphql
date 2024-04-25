@@ -22,6 +22,7 @@ export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo($filter: Mo
   APITypes.OnCreateTodoSubscriptionVariables,
   APITypes.OnCreateTodoSubscription
 >;
+
 export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
   onUpdateTodo(filter: $filter) {
     id

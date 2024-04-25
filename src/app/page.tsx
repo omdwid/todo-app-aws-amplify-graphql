@@ -7,6 +7,8 @@ import * as queries from "@/graphql/queries";
 import { FaTrashAlt } from "react-icons/fa";
 
 import config from "@/amplifyconfiguration.json";
+import Header from "@/components/Header";
+import TodoList from "@/components/TodoList";
 
 const cookiesClient = generateServerClientUsingCookies({
   config,
@@ -29,6 +31,22 @@ async function createTodo(formData: FormData) {
   revalidatePath("/");
 }
 
+async function deleteTodo(id: string) {
+  "use server";
+  const { data } = await cookiesClient.graphql({
+    query: mutations.deleteTodo,
+    variables: {
+      input: {
+        id: id,
+      },
+    },
+  });
+
+  console.log("Deleted Todo Successfully: ", data?.deleteTodo);
+
+  revalidatePath("/");
+}
+
 export default async function Home() {
   // 2. Fetch additional todos
   const { data, errors } = await cookiesClient.graphql({
@@ -38,42 +56,41 @@ export default async function Home() {
   const todos = data.listTodos.items;
 
   return (
-    <div className="h-screen w-full">
-      <div className="mx-auto mt-[100px] flex flex-col items-center gap-5 min-h-1/2 max-w-[500px] bg-zinc-900 p-5 rounded-md">
+    <div className="h-screen w-full bg-darkBlue">
+      <Header />
+      
+      <div className="mx-auto mt-[100px] flex flex-col items-center gap-10 min-h-1/2 max-w-[500px] p-5 rounded-md">
         <form action={createTodo} className="flex gap-2 w-full">
           <input
             name="name"
-            placeholder="Add a todo"
-            className="bg-black text-white border border-1 w-[85%] rounded-md border-white focus:outline-none"
+            className="bg-blue p-3 text-white border border-1 w-[85%] rounded-md border-white focus:outline-none"
           />
           <button
             type="submit"
-            className="bg-blue-500 py-1 px-2 rounded-md w-[15%]"
+            className="bg-blue-500 py-1 px-2 rounded-md w-[15%] bg-blue font-semibold"
           >
             Add
           </button>
         </form>
 
         {/* 3. Handle edge cases & zero state & error states*/}
-        {(!todos || todos.length === 0 || errors) && (
-          <div>
-            <p>No todos, please add one.</p>
-          </div>
-        )}
+        
 
         {/* 4. Display todos*/}
-        <div className="flex flex-col gap-3 w-full">
-          {todos.map((todo) => {
+        {/* <div className="flex flex-col gap-3 w-full border-[3px] border-blue p-5 rounded-lg">
+          {todos.map((todo, i) => {
             return (
-              <div key={todo.id} className="flex justify-between items-center">
+              <div key={todo.id} className={`flex p-3 justify-between items-center border-b-2 border-blue text-blue ${i === todos.length - 1 && "border-none"}`}>
                 <p className="list-none">
                   {todo.name}
                 </p>
-                <FaTrashAlt color="red" />
+                <FaTrashAlt color="#52E5FE" size="1.25rem" />
               </div>
             );
           })}
-        </div>
+        </div> */}
+
+        <TodoList todos={todos} deleteTodo={deleteTodo} />
       </div>
     </div>
   );
