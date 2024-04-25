@@ -63,11 +63,11 @@ export default async function Home() {
         <form action={createTodo} className="flex gap-2 w-full">
           <input
             name="name"
-            className="bg-blue p-3 text-white border border-1 w-[85%] rounded-md border-white focus:outline-none"
+            className="bg-blue p-3 max-md:p-1 text-white border border-1 w-[85%] rounded-md border-white focus:outline-none"
           />
           <button
             type="submit"
-            className="bg-blue-500 py-1 px-2 rounded-md w-[15%] bg-blue font-semibold"
+            className="bg-blue-500 py-1 px-2 max-md:px-1 max-md:text-sm rounded-md w-[15%] bg-blue font-semibold"
           >
             Add
           </button>

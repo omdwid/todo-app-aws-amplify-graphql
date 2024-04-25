@@ -12,16 +12,16 @@ interface Props {
 const TodoList = ({ todos, deleteTodo }: Props) => {
   return (
     <div className="flex flex-col gap-3 w-full border-[3px] border-blue p-5 rounded-lg">
-      {(!todos || todos.length === 0 ) && (
-          <div className="text-blue">
-            <p>No todos, please add one.</p>
-          </div>
-        )}
+      {(!todos || todos.length === 0) && (
+        <div className="text-blue">
+          <p>No todos, please add one.</p>
+        </div>
+      )}
       {todos.map((todo, i) => {
         return (
           <div
             key={todo.id}
-            className={`flex p-3 justify-between items-center border-b-2 border-blue text-blue ${
+            className={`flex p-3 max-md:p-1 justify-between items-center border-b-2 border-blue text-blue ${
               i === todos.length - 1 && "border-none"
             }`}
           >
